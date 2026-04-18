@@ -1,0 +1,50 @@
+name: Chrome windows arm
+
+on: [push, workflow_dispatch]
+
+env:
+  CYPRESS_CACHE_FOLDER: $HOME/.cache/Cypress
+  DEBUG: 'cypress:cli*'
+
+jobs:
+  chrome-win-arm:
+    runs-on: windows-11-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+      - name: Show runner infos
+        run: |
+          node -p "'OS type:     ' + os.type()"
+          node -p "'OS version:  ' + os.version()"
+          node -p "'OS release:  ' + os.release()"
+          node -p "'OS platform: ' + os.platform()"
+          node -p "'OS arch:     ' + os.arch()"
+          node -p "'OS machine:  ' + os.machine()"
+          echo "OS cpus:"
+          node -p "os.cpus()"
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CYPRESS_INSTALL_BINARY: 0 # do not install Cypress binary
+      - name: Install Cypress binary
+        run: npx cypress install
+      - name: List Cypress cache folder
+        run: npx cypress cache list
+      - name: Verify Cypress install
+        run: npx cypress verify
+      - name: Show Cypress version
+        run: npx cypress version
+      - name: Show installed browsers
+        run: npx cypress info
+      - name: Cypress test with Chrome
+        uses: cypress-io/github-action@v7
+        timeout-minutes: 10
+        with:
+          start: npm start
+          browser: chrome
+          install: false
