@@ -34,7 +34,7 @@ jobs:
     # Recording needs a projectId and Record Key, which a fork does not have.
     # Skip when the code comes from a fork, and when this workflow itself runs
     # in a fork of this repository.
-    if: github.repository_owner == 'cypress-io' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    # if: github.repository_owner == 'cypress-io' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-26.04
     strategy:
       # when one test fails, DO NOT cancel the other
