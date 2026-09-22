@@ -25,19 +25,19 @@ jobs:
       # and saved automatically after the entire workflow successfully finishes.
       # See https://github.com/actions/cache
       - name: Cache node modules
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/bun.lockb') }}
 
       - name: Cache bun
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.bun
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
 
       - name: Cache Cypress binary
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: ~/.cache/Cypress
           key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/bun.lockb') }}
